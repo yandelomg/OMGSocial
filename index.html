@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OMGSocial — Feed</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.svg" alt="OMGSocial logo" class="logo">
+      <h1>OMGSocial</h1>
+    </div>
+    <div class="search"><input id="searchInput" placeholder="Search people, posts, topics"></div>
+    <nav class="actions">
+      <button class="compose">Compose</button>
+      <button class="profile">You</button>
+    </nav>
+    <div class="account" id="accountArea">
+      <!-- Filled by JS: shows Register or user avatar/name -->
+    </div>
+  </header>
+
+  <main class="container">
+    <aside class="sidebar left">
+      <div class="profile-card card-3d" id="sideProfileCard">
+        <div class="avatar" id="sideAvatarWrap"><img id="sideAvatarImg" src="assets/logo.svg" alt="avatar"></div>
+        <div class="info">
+          <div id="sideNameLine"><strong id="sideName">Guest</strong><span id="sideBadges"></span></div>
+          <span id="sideHandle">@guest</span>
+          <div id="sideAdminInfo" class="info-text" style="display:none">This user is an Official Administrator or Staff Member of the website.</div>
+        </div>
+      </div>
+      <nav class="menu">
+        <a class="active" data-action="home" role="button" tabindex="0">Home</a>
+        <a data-action="explore" role="button" tabindex="0">Explore</a>
+        <a data-action="notifications" role="button" tabindex="0">Notifications</a>
+        <a data-action="messages" role="button" tabindex="0">Messages</a>
+      </nav>
+    </aside>
+
+    <section class="feed">
+      <div class="compose-area card-3d">
+        <textarea id="composeInput" placeholder="What's happening?" rows="2"></textarea>
+        <div class="compose-actions">
+          <button id="postBtn">Post</button>
+        </div>
+      </div>
+
+      <div id="posts" class="posts"></div>
+    </section>
+
+    <aside class="sidebar right">
+      <div class="trends card-3d">
+        <h3>Trending</h3>
+        <ul class="trending-list">
+          <li>Royalzzi Comes out of the closet</li>
+          <li>Salzation goes viral</li>
+          <li>iShowSpeed to do a collaboration with Kai Cenat</li>
+        </ul>
+        <div class="trends-note">Only on OMGSocial</div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Profile modal -->
+  <div id="profileModal" class="modal hidden">
+    <div class="modal-content card-3d">
+      <h2>Edit Profile / Register</h2>
+      <form id="profileForm">
+        <label>Name<br><input id="pfName" type="text" placeholder="Display name" required></label>
+        <label>Handle<br><input id="pfHandle" type="text" placeholder="yourhandle (without @)" required></label>
+        <label>Avatar<br>
+          <input id="pfAvatarInput" type="file" accept="image/*">
+        </label>
+        <div class="avatar-preview"><img id="pfAvatarPreview" src="assets/logo.svg" alt="preview"></div>
+        <div class="form-actions">
+          <button type="submit">Save</button>
+          <button type="button" id="pfClose">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit post modal -->
+  <div id="editModal" class="modal hidden">
+    <div class="modal-content card-3d">
+      <h2>Edit Post</h2>
+      <textarea id="editTextarea" rows="4"></textarea>
+      <div class="form-actions">
+        <button id="saveEdit">Save</button>
+        <button id="cancelEdit">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

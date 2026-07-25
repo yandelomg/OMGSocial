@@ -1,0 +1,138 @@
+:root{
+  --bg:#0f1724;
+  --card:#0f2a3a;
+  --accent1:#7f5af0;
+  --accent2:#00d2ff;
+  --muted:rgba(255,255,255,0.7);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  background:linear-gradient(180deg,#051029 0%,#0b1220 50%);
+  color:white; -webkit-font-smoothing:antialiased;
+}
+.topbar{display:flex;align-items:center;gap:20px;padding:14px 28px;background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent);backdrop-filter:blur(6px)}
+.topbar .brand{display:flex;align-items:center;gap:12px}
+.logo{width:36px;height:36px}
+.topbar .search input{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:var(--muted);min-width:240px;box-shadow:0 10px 30px rgba(0,0,0,0.2);transition:transform 160ms,box-shadow 160ms}
+.topbar .search input:focus{outline:none;transform:translateY(-1px);box-shadow:0 16px 40px rgba(0,0,0,0.25);border-color:rgba(255,255,255,0.2);color:#fff}
+.topbar .actions{margin-left:auto;display:flex;gap:8px}
+.topbar button{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:0;padding:8px 12px;border-radius:10px;color:#021;cursor:pointer;box-shadow:0 8px 20px rgba(127,90,240,0.12);transition:transform 160ms,box-shadow 160ms}
+.topbar button:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(127,90,240,0.16)}
+
+.container{display:grid;grid-template-columns:250px 1fr 300px;gap:20px;padding:28px}
+.sidebar{height:calc(100vh - 110px);overflow:auto}
+.feed{max-width:680px;min-width:0}
+.card-3d{background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:14px;margin-bottom:16px;box-shadow:0 10px 30px rgba(2,6,23,0.6);transform-style:preserve-3d;transition:transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms;}
+.card-3d:hover{transform:translateY(-8px) rotateX(6deg)}
+
+.profile-card{display:flex;align-items:center;gap:12px;padding:16px}
+.profile-card .avatar{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#021}
+.profile-card .info{display:flex;flex-direction:column}
+.menu{display:flex;flex-direction:column;gap:8px;padding:12px}
+.menu a{padding:10px;border-radius:10px;color:var(--muted);cursor:pointer;border:1px solid rgba(255,255,255,0.02);background:transparent;transition:all 160ms ease}
+.menu a:hover{transform:translateY(-2px);background:rgba(255,255,255,0.02);box-shadow:0 6px 14px rgba(2,6,23,0.5)}
+.menu a.active{background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));box-shadow:inset 0 0 0 1px rgba(255,255,255,0.02)}
+
+/* general button style for in-content buttons */
+button{font-family:inherit}
+.compose-area .compose-actions button, .post .post-actions button, .actions-bar button{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:0;padding:8px 10px;border-radius:10px;color:#021;cursor:pointer;transition:transform 140ms,box-shadow 140ms}
+.compose-area .compose-actions button:hover, .post .post-actions button:hover, .actions-bar button:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(2,6,23,0.45)}
+
+.menu a[role="button"]:focus{outline:2px solid rgba(127,90,240,0.22);outline-offset:2px}
+
+.compose-area textarea{width:100%;resize:none;border:0;background:transparent;color:var(--muted);outline:none}
+.compose-actions{display:flex;justify-content:flex-end}
+
+.posts{display:flex;flex-direction:column}
+.post{display:block;padding:14px;border-radius:12px;margin-bottom:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));cursor:pointer;transition:transform 300ms, box-shadow 300ms}
+.post .meta{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.post .avatar{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:flex;align-items:center;justify-content:center;font-weight:700;color:#021}
+.post .content{font-size:15px;color:var(--muted)}
+
+/* 3D tilt effect helper */
+.tilt{transform:perspective(800px) rotateX(var(--rx)) rotateY(var(--ry)) translateZ(var(--tz));}
+
+/* Badges (staff shield + verified check) */
+.badges{display:inline-flex;align-items:center;gap:6px;margin-left:4px}
+.badge{display:inline-flex;align-items:center;justify-content:center;line-height:0;padding:4px;border-radius:6px}
+.badge svg{width:14px;height:14px;display:block}
+
+.verified{position:relative;color:#fff;background:#10b981;padding:4px;border-radius:6px;box-shadow:0 6px 18px rgba(16,185,129,0.14)}
+.verified svg{filter:drop-shadow(0 6px 10px rgba(16,185,129,0.16));}
+.verified{animation:pulse 1.6s infinite}
+
+@keyframes pulse{
+  0%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.08);opacity:0.9}
+  100%{transform:scale(1);opacity:1}
+}
+
+.staff{color:#fff;background:linear-gradient(135deg,var(--accent1),var(--accent2));padding:4px;border-radius:6px;box-shadow:0 6px 18px rgba(127,90,240,0.12)}
+.staff svg{filter:drop-shadow(0 6px 12px rgba(127,90,240,0.12));}
+.admin-logo{display:inline-flex;align-items:center;justify-content:center;background:#0cf27f;padding:4px;border-radius:6px;box-shadow:0 6px 18px rgba(12,242,127,0.16)}
+.admin-logo img{width:14px;height:14px;border-radius:3px;display:block}
+
+/* Account header and modal */
+.account{margin-left:16px;display:flex;align-items:center;gap:10px}
+.account .reg-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
+.account .user{display:flex;align-items:center;gap:8px;cursor:pointer}
+.account .user .mini-avatar{width:34px;height:34px;border-radius:8px;overflow:hidden}
+.account .user img{width:100%;height:100%;object-fit:cover}
+
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);backdrop-filter:blur(4px);z-index:60}
+.modal.hidden{display:none}
+.modal-content{width:420px;max-width:92%;padding:18px}
+.modal-content h2{margin-top:0}
+.modal-content label{display:block;margin:8px 0;color:var(--muted);font-size:14px}
+.modal-content input[type="text"], .modal-content input[type="file"], .modal-content textarea{width:100%;padding:10px 12px;border-radius:10px;border:0;background:rgba(255,255,255,0.03);color:var(--muted);transition:box-shadow 140ms,transform 140ms;font-size:15px}
+.modal-content input[type="text"]::placeholder{color:rgba(255,255,255,0.45)}
+.modal-content input[type="text"]:focus, .modal-content textarea:focus{box-shadow:0 10px 30px rgba(127,90,240,0.08);transform:translateY(-2px);outline:none}
+.modal-content input[type="file"]{padding:6px}
+.avatar-preview{margin-top:10px}
+.avatar-preview{display:flex;align-items:center;gap:12px}
+.avatar-preview img{width:72px;height:72px;border-radius:12px;object-fit:cover;cursor:pointer;border:2px solid rgba(255,255,255,0.04);box-shadow:0 8px 20px rgba(2,6,23,0.5)}
+.avatar-preview .avatar-hint{color:var(--muted);font-size:13px}
+.form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+
+/* Modal buttons: primary (save) and secondary (close) */
+.modal-content .form-actions button{padding:8px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+.modal-content .form-actions button[type="submit"], .modal-content .form-actions button:first-child{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#021;box-shadow:0 12px 30px rgba(127,90,240,0.12);transition:transform 140ms}
+.modal-content .form-actions button[type="submit"]:hover, .modal-content .form-actions button:first-child:hover{transform:translateY(-3px)}
+.modal-content .form-actions button#pfClose, .modal-content .form-actions button[type="button"]{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+/* post actions */
+.post .post-actions{display:flex;gap:8px;margin-top:10px}
+.post .post-actions button{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:6px 8px;border-radius:8px;color:var(--muted);cursor:pointer}
+
+/* generic actions bar for likes/reposts/comments */
+.post .actions-bar{display:flex;gap:10px;margin-top:12px}
+.actions-bar button{background:transparent;border:0;color:var(--muted);padding:6px 8px;border-radius:8px;cursor:pointer}
+.actions-bar button:hover{background:rgba(255,255,255,0.02)}
+
+/* admin info text shown below message */
+.info-text{background:linear-gradient(90deg, rgba(127,90,240,0.06), rgba(0,210,255,0.02));padding:8px;border-radius:8px;margin-top:10px;color:var(--muted);font-size:13px}
+
+/* sidebar profile small avatar */
+.profile-card .avatar img{width:56px;height:56px;border-radius:12px;object-fit:cover}
+.mini-avatar img{width:100%;height:100%;object-fit:cover}
+
+/* Ensure username truncates with ellipsis and badges sit to its right */
+.author strong{display:flex;align-items:center;gap:6px}
+.author .display-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block}
+
+/* Sidebar name line - same behavior */
+#sideNameLine{display:flex;align-items:center;gap:6px}
+#sideName{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block}
+
+
+
+/* responsive */
+@media (max-width:1000px){.container{grid-template-columns:1fr}.sidebar.right{display:none}.sidebar.left{display:none}}
+
+/* Trending list styles: remove bullets, add separators and note */
+.trending-list{list-style:none;padding:8px 0;margin:6px 0}
+.trending-list li{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:14px}
+.trending-list li:last-child{border-bottom:0}
+.trends-note{text-align:center;margin-top:12px;font-size:13px;color:var(--muted)}

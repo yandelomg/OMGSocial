@@ -1,4 +1,4 @@
-# OMGSocial
+# OMGSocial (This Is for Devs Only)
 
 A minimal static demo of a 3D-looking social feed (HTML/CSS/JS).
 

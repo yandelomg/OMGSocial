@@ -54,7 +54,7 @@ function renderAccountArea(){
   const avatarWrap = document.createElement('div');
   avatarWrap.className='mini-avatar';
   const img = document.createElement('img');
-  img.src = currentUser.avatar || 'assets/logo.svg';
+  img.src = currentUser.avatar || 'logo.svg';
   avatarWrap.appendChild(img);
   const name = document.createElement('div');
   name.innerHTML = `<strong>${escapeHtml(currentUser.name)}</strong>`;
@@ -75,14 +75,14 @@ function renderSidebarProfile(){
   if(!currentUser){
     sideName.textContent = 'Guest';
     sideHandle.textContent = '@guest';
-    sideAvatarImg.src = 'assets/logo.svg';
+    sideAvatarImg.src = 'logo.svg';
     sideBadges.innerHTML = '';
     sideAdminInfo.style.display = 'none';
     return;
   }
   sideName.textContent = currentUser.name || currentUser.handle || 'User';
   sideHandle.textContent = currentUser.handle || '';
-  sideAvatarImg.src = currentUser.avatar || 'assets/logo.svg';
+  sideAvatarImg.src = currentUser.avatar || 'logo.svg';
   sideBadges.innerHTML = renderBadges(currentUser);
   if(currentUser.admin){ sideAdminInfo.style.display = 'block'; } else { sideAdminInfo.style.display = 'none'; }
 }
@@ -91,11 +91,11 @@ function openProfileModal(){
   if(currentUser){
     pfName.value = currentUser.name || '';
     pfHandle.value = currentUser.handle || '';
-    pfAvatarPreview.src = currentUser.avatar || 'assets/logo.svg';
+    pfAvatarPreview.src = currentUser.avatar || 'logo.svg';
   } else {
     pfName.value = '';
     pfHandle.value = '';
-    pfAvatarPreview.src = 'assets/logo.svg';
+    pfAvatarPreview.src = 'logo.svg';
   }
   profileModal.classList.remove('hidden');
 }
@@ -144,7 +144,7 @@ function makePostElement(post){
   const badges = renderBadges(post.author);
   el.innerHTML = `
     <div class="meta">
-      <div class="avatar"><img src="${post.author.avatar || 'assets/logo.svg'}" alt="avatar" style="width:100%;height:100%;border-radius:10px;object-fit:cover"></div>
+      <div class="avatar"><img src="${post.author.avatar || 'logo.svg'}" alt="avatar" style="width:100%;height:100%;border-radius:10px;object-fit:cover"></div>
       <div class="author"><strong><span class="display-name">${escapeHtml(post.author.name)}</span>${badges}</strong> <div class="handle">${escapeHtml(post.author.handle)}</div></div>
     </div>
     <div class="content">${escapeHtml(post.text)}</div>
@@ -165,11 +165,11 @@ function renderBadges(author){
   if(!author) return '';
   const parts = [];
   if(author.admin){
-    parts.push(`<span class="badge staff" title="Staff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z" fill="currentColor"/></svg></span>`);
-    parts.push(`<span class="badge admin-logo" title="Official Administrator"><img src="assets/logo.svg" alt="logo"></span>`);
+    parts.push(`<span class="badge staff" title="Staff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-[...]
+    parts.push(`<span class="badge admin-logo" title="Official Administrator"><img src="logo.svg" alt="logo"></span>`);
   }
   if(author.verified){
-    parts.push(`<span class="badge verified" title="Verified"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 13.4142L7.75735 10.5858L6.34314 12L10.5858 16.2427L17.6568 9.1716L16.2426 7.75739L10.5858 13.4142Z" fill="currentColor" /></svg></span>`);
+    parts.push(`<span class="badge verified" title="Verified"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 13.4142L7.75735 10.5[...]
   }
   if(parts.length===0) return '';
   return `<span class="badges">${parts.join('')}</span>`;
@@ -189,9 +189,9 @@ renderSidebarProfile();
 
 // Initialize sample posts if none
 if(posts.length===0){
-  posts.push({id: Date.now()+1, text:'Exploring 3D transforms for a more tactile feed!', author:{name:'Admin',handle:'@admin',avatar:'assets/logo.svg',admin:true,verified:true}});
-  posts.push({id: Date.now()+2, text:'CSS-only depth can feel surprisingly immersive.', author:{name:'Designer',handle:'@designer',avatar:'assets/logo.svg',admin:false,verified:false}});
-  posts.push({id: Date.now()+3, text:'Micro-interactions make browsing delightful.', author:{name:'Creator',handle:'@creator',avatar:'assets/logo.svg',admin:false,verified:true}});
+  posts.push({id: Date.now()+1, text:'Exploring 3D transforms for a more tactile feed!', author:{name:'Admin',handle:'@admin',avatar:'logo.svg',admin:true,verified:true}});
+  posts.push({id: Date.now()+2, text:'CSS-only depth can feel surprisingly immersive.', author:{name:'Designer',handle:'@designer',avatar:'logo.svg',admin:false,verified:false}});
+  posts.push({id: Date.now()+3, text:'Micro-interactions make browsing delightful.', author:{name:'Creator',handle:'@creator',avatar:'logo.svg',admin:false,verified:true}});
   savePosts();
 }
 
@@ -240,7 +240,7 @@ function handleMenuAction(action){
     postsEl.innerHTML = '';
     trending.forEach(t=>{
       const el = document.createElement('article'); el.className='post card-3d';
-      el.innerHTML = `<div class="meta"><div class="avatar"><img src="assets/logo.svg" style="width:100%;height:100%;object-fit:cover;border-radius:10px"></div><div class="author"><strong><span class="display-name">OMGSocial</span>${renderBadges({admin:true,verified:false})}</strong><div class="handle">@omgsocial</div></div></div><div class="content">${escapeHtml(t)}</div>`;
+      el.innerHTML = `<div class="meta"><div class="avatar"><img src="logo.svg" style="width:100%;height:100%;object-fit:cover;border-radius:10px"></div><div class="author"><strong><span c[...]
       postsEl.appendChild(el);
       attachTilt(el);
     });
@@ -270,7 +270,7 @@ postBtn.addEventListener('click', ()=>{
     openProfileModal();
     return;
   }
-  const post = {id: Date.now(), text: v, author: {name: currentUser.name, handle: currentUser.handle, avatar: currentUser.avatar, admin: currentUser.admin, verified: currentUser.verified}, createdAt: Date.now()};
+  const post = {id: Date.now(), text: v, author: {name: currentUser.name, handle: currentUser.handle, avatar: currentUser.avatar, admin: currentUser.admin, verified: currentUser.verified}, createdAt: [...]
   posts.push(post); savePosts(); renderPosts(); composeInput.value='';
 });
 

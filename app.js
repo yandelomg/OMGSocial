@@ -1,4 +1,4 @@
-// Minimal JS with client-side persistence: registration, avatar upload, edit/delete
+// OMGSocial - Client-side persistence with registration, avatar upload, edit/delete
 const postsEl = document.getElementById('posts');
 const postBtn = document.getElementById('postBtn');
 const composeInput = document.getElementById('composeInput');
@@ -118,17 +118,14 @@ profileForm.addEventListener('submit', (ev)=>{
   let handle = pfHandle.value.trim();
   if(!handle.startsWith('@')) handle = '@'+handle;
   const avatar = pfAvatarPreview.src;
-  currentUser = {name, handle, avatar, admin: true, verified: true};
+  currentUser = {name, handle, avatar, admin: false, verified: true};
   saveUser(currentUser);
   renderAccountArea();
-  // update sidebar profile
   renderSidebarProfile();
-  // update existing posts authored by this user to use new avatar/name
   posts = posts.map(p=>{
     if(p.author && p.author.handle === currentUser.handle){
       p.author.avatar = currentUser.avatar;
       p.author.name = currentUser.name;
-      p.author.admin = currentUser.admin;
       p.author.verified = currentUser.verified;
     }
     return p;
@@ -152,8 +149,8 @@ function makePostElement(post){
   if(isOwn){
     const actions = document.createElement('div');
     actions.className='post-actions';
-    const editBtn = document.createElement('button'); editBtn.textContent='Edit'; editBtn.dataset.id = post.id; editBtn.className='edit-btn';
-    const delBtn = document.createElement('button'); delBtn.textContent='Delete'; delBtn.dataset.id = post.id; delBtn.className='delete-btn';
+    const editBtn = document.createElement('button'); editBtn.textContent='✏️ Edit'; editBtn.dataset.id = post.id; editBtn.className='edit-btn';
+    const delBtn = document.createElement('button'); delBtn.textContent='🗑️ Delete'; delBtn.dataset.id = post.id; delBtn.className='delete-btn';
     actions.appendChild(editBtn); actions.appendChild(delBtn);
     el.appendChild(actions);
   }
@@ -165,11 +162,10 @@ function renderBadges(author){
   if(!author) return '';
   const parts = [];
   if(author.admin){
-    parts.push(`<span class="badge staff" title="Staff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-[...]
-    parts.push(`<span class="badge admin-logo" title="Official Administrator"><img src="logo.svg" alt="logo"></span>`);
+    parts.push(`<span class="badge admin-badge" title="Official Administrator"><img src="logo.svg" alt="official" style="width:16px;height:16px"></span>`);
   }
   if(author.verified){
-    parts.push(`<span class="badge verified" title="Verified"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 13.4142L7.75735 10.5[...]
+    parts.push(`<span class="badge verified" title="Verified">✓</span>`);
   }
   if(parts.length===0) return '';
   return `<span class="badges">${parts.join('')}</span>`;
@@ -184,14 +180,10 @@ function renderPosts(){
   });
 }
 
-// ensure sidebar is rendered initially
 renderSidebarProfile();
 
-// Initialize sample posts if none
 if(posts.length===0){
-  posts.push({id: Date.now()+1, text:'Exploring 3D transforms for a more tactile feed!', author:{name:'Admin',handle:'@admin',avatar:'logo.svg',admin:true,verified:true}});
-  posts.push({id: Date.now()+2, text:'CSS-only depth can feel surprisingly immersive.', author:{name:'Designer',handle:'@designer',avatar:'logo.svg',admin:false,verified:false}});
-  posts.push({id: Date.now()+3, text:'Micro-interactions make browsing delightful.', author:{name:'Creator',handle:'@creator',avatar:'logo.svg',admin:false,verified:true}});
+  posts.push({id: Date.now()+1, text:'🚀 Welcome to OMGSocial! Register to start posting amazing content.', author:{name:'OMGSocial',handle:'@official',avatar:'logo.svg',admin:true,verified:true}});
   savePosts();
 }
 
@@ -215,7 +207,6 @@ searchInput.addEventListener('input', ()=>{
   matched.slice().reverse().forEach(post=>postsEl.appendChild(makePostElement(post)));
 });
 
-// Sidebar menu interactions
 function wireMenu(){
   const items = document.querySelectorAll('.menu a');
   items.forEach(it=>{
@@ -235,12 +226,11 @@ function handleMenuAction(action){
     return;
   }
   if(action === 'explore'){
-    // show trending list as temporary explore feed
     const trending = Array.from(document.querySelectorAll('.trending-list li')).map(li=>li.textContent.trim());
     postsEl.innerHTML = '';
     trending.forEach(t=>{
       const el = document.createElement('article'); el.className='post card-3d';
-      el.innerHTML = `<div class="meta"><div class="avatar"><img src="logo.svg" style="width:100%;height:100%;object-fit:cover;border-radius:10px"></div><div class="author"><strong><span c[...]
+      el.innerHTML = `<div class="meta"><div class="avatar"><img src="logo.svg" style="width:100%;height:100%;object-fit:cover;border-radius:10px"></div><div class="author"><strong>${escapeHtml(t)}</strong></div></div>`;
       postsEl.appendChild(el);
       attachTilt(el);
     });
@@ -248,13 +238,13 @@ function handleMenuAction(action){
   }
   if(action === 'notifications'){
     postsEl.innerHTML = '';
-    const el = document.createElement('div'); el.className='card-3d'; el.style.padding='18px'; el.innerHTML = '<strong>Notifications</strong><div class="muted">You have no new notifications.</div>';
+    const el = document.createElement('div'); el.className='card-3d'; el.style.padding='18px'; el.innerHTML = '<strong>🔔 Notifications</strong><div class="muted">You have no new notifications.</div>';
     postsEl.appendChild(el);
     return;
   }
   if(action === 'messages'){
     postsEl.innerHTML = '';
-    const el = document.createElement('div'); el.className='card-3d'; el.style.padding='18px'; el.innerHTML = '<strong>Messages</strong><div class="muted">No direct messages yet.</div>';
+    const el = document.createElement('div'); el.className='card-3d'; el.style.padding='18px'; el.innerHTML = '<strong>💬 Messages</strong><div class="muted">No direct messages yet.</div>';
     postsEl.appendChild(el);
     return;
   }
@@ -266,22 +256,21 @@ postBtn.addEventListener('click', ()=>{
   const v = composeInput.value.trim();
   if(!v) return;
   if(!currentUser){
-    alert('Please register or login first.');
+    alert('⚠️ Please register first to post!');
     openProfileModal();
     return;
   }
-  const post = {id: Date.now(), text: v, author: {name: currentUser.name, handle: currentUser.handle, avatar: currentUser.avatar, admin: currentUser.admin, verified: currentUser.verified}, createdAt: [...]
+  const post = {id: Date.now(), text: v, author: {name: currentUser.name, handle: currentUser.handle, avatar: currentUser.avatar, admin: currentUser.admin, verified: currentUser.verified}, createdAt: new Date().toISOString()};
   posts.push(post); savePosts(); renderPosts(); composeInput.value='';
 });
 
-// Edit / Delete via event delegation
 postsEl.addEventListener('click', (e)=>{
   const id = e.target.dataset && e.target.dataset.id;
   if(!id) return;
   if(e.target.classList.contains('edit-btn')){
     openEditModal(id);
   } else if(e.target.classList.contains('delete-btn')){
-    if(confirm('Delete this post?')){
+    if(confirm('🗑️ Delete this post? This cannot be undone.')){
       posts = posts.filter(p=>String(p.id)!==String(id)); savePosts(); renderPosts();
     }
   }
@@ -327,5 +316,4 @@ function attachTilt(node){
   });
 }
 
-// Attach tilt to any pre-existing card-3d elements
 document.querySelectorAll('.card-3d').forEach(attachTilt);

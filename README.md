@@ -1,4 +1,4 @@
-# 3DModernSocialMediaWebsite
+# OMGSocial
 
 A minimal static demo of a 3D-looking social feed (HTML/CSS/JS).
 
